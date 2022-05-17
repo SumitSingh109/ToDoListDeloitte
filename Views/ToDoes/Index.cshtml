@@ -1,0 +1,36 @@
+﻿@model ToDoListDeloitte.Models.ToDo
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div id="displayTableDiv"></div>
+
+<div id="createToDoForm">
+    @using (Ajax.BeginForm("AjaxCreateSingleToDo", "ToDoes",
+        new AjaxOptions
+        {
+            InsertionMode = InsertionMode.Replace,
+            HttpMethod = "Post",
+            UpdateTargetId = "displayTableDiv"
+        }
+        ))
+        {
+        <div class="form-group">
+            @Html.AntiForgeryToken()
+            <div>
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        }
+</div>
+
+@section Scripts {
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/CustomScripts/DisplayTable.js"></script>
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
